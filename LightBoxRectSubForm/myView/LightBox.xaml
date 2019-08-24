@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="LightBoxRectSubForm.myView.LightBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LightBoxRectSubForm.myView"
+             mc:Ignorable="d" Height="42" Width="86">
+    <Grid x:Name="root" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" Margin="0,0,0.4,-5.4" MouseLeftButtonDown="root_MouseLeftButtonDown" MouseRightButtonDown="root_MouseRightButtonDown">
+        <CheckBox x:Name="cbAddr" Visibility="Hidden" Checked="cbAddr_Checked" Unchecked="cbAddr_Unchecked" Margin="0,0,-4.6,-0.4" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="20"/>
+        <Label x:Name="labelWaitTime" Content="12" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="23" Foreground="White"/>
+        <Label x:Name="labelAddr" Content="12" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="13" Foreground="White" Padding="0,2,0,0" FontSize="10" Margin="2,2,0,0"/>
+        <Label x:Name="labelId" Content="1600" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="13" Foreground="White" Width="27" FontSize="10" HorizontalAlignment="Right" FlowDirection="RightToLeft" Padding="0" Margin="0,2,2,0"/>
+    </Grid>
+</UserControl>

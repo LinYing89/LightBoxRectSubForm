@@ -1,0 +1,29 @@
+﻿<Window x:Class="LightBoxRectSubForm.windows.WidId"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LightBoxRectSubForm.windows"
+        mc:Ignorable="d"
+        Title="id相关" Height="337.2" Width="460" Closing="Window_Closing">
+    <Grid>
+        <Button x:Name="btnGetId" Content="获取id" HorizontalAlignment="Left" Margin="34,23,0,0" VerticalAlignment="Top" Width="75" Click="btnGetId_Click"/>
+        <Button x:Name="btnSetId" Content="设置id" HorizontalAlignment="Left" Margin="34,47,0,0" VerticalAlignment="Top" Width="75" Click="btnSetId_Click"/>
+        <GroupBox Header="测试" HorizontalAlignment="Left" Height="175" Margin="34,84,0,0" VerticalAlignment="Top" Width="410">
+            <Grid Margin="0,0,-3.4,0.2">
+                <Label Content="正转时间" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0"/>
+                <TextBox x:Name="tbRunTime" HorizontalAlignment="Left" Height="23" Margin="63,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" Text="3"/>
+                <Label Content="秒" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,31,0,0"/>
+                <Label Content="停留时间" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,62,0,0"/>
+                <TextBox x:Name="tbKeepTime" HorizontalAlignment="Left" Height="23" Margin="63,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" Text="3"/>
+                <Label Content="秒" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,62,0,0"/>
+                <Button x:Name="btnRun" Content="单灯箱运行" HorizontalAlignment="Left" Margin="6,99,0,0" VerticalAlignment="Top" Width="145" Click="btnRun_Click"/>
+                <Label Content="id" HorizontalAlignment="Left" Margin="6,5,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="tbId" HorizontalAlignment="Left" Height="23" Margin="63,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" Text="1"/>
+                <Button x:Name="btnAllRun" Content="全网运行" HorizontalAlignment="Left" Margin="6,123,0,0" VerticalAlignment="Top" Width="145" Click="btnAllRun_Click"/>
+            </Grid>
+        </GroupBox>
+        <Label x:Name="labelId" Content="id" Margin="114,20,9.6,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,24 @@
+﻿<Window x:Class="LightBoxRectSubForm.windows.WidShowBoxes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LightBoxRectSubForm.windows"
+        mc:Ignorable="d"
+        Title="灯箱矩阵" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid>
+        <ScrollViewer Margin="0,39,-0.4,0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Canvas x:Name="canvasBoxContainer" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="374" Width="794" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </ScrollViewer>
+        <StatusBar Height="34" VerticalAlignment="Top" Margin="0,0,-0.4,0">
+            <Button x:Name="btnSelectAll" Content="全选" Click="btnSelectAll_Click"/>
+            <Button x:Name="btnUnSelectAll" Content="全不选" Click="btnUnSelectAll_Click"/>
+            <Button x:Name="btnEdit" Content="编辑" Click="btnEdit_Click"/>
+            <CheckBox x:Name="cbShowCheckBox" Content="显示复选框" Checked="cbShowCheckBox_Checked" Unchecked="cbShowCheckBox_Unchecked"/>
+            <Button x:Name="btnAllRunTime" Content="所有灯箱正转时间" Click="btnAllRunTime_Click"/>
+            <Button x:Name="btnAllKeepTime" Content="所有灯箱停留时间" Click="btnAllKeepTime_Click"/>
+            <Button x:Name="btnFirstId" Content="初始id" Click="btnFirstId_Click"/>
+        </StatusBar>
+
+    </Grid>
+</Window>

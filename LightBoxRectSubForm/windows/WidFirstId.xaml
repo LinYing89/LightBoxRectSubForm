@@ -1,0 +1,17 @@
+﻿<Window x:Class="LightBoxRectSubForm.windows.WidFirstId"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LightBoxRectSubForm.windows"
+        mc:Ignorable="d"
+        Title="初始id设置" Height="207.6" Width="261.6">
+    <Grid>
+        <Label Content="第一个灯箱的id号码:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235"/>
+        <Button x:Name="btnCancel" Content="取消" Margin="0,0,9.8,10.6" HorizontalAlignment="Right" Width="75" Height="19" VerticalAlignment="Bottom" Click="btnCancel_Click"/>
+        <Button x:Name="btnOk" Content="确定" Margin="0,0,89.8,10.6" HorizontalAlignment="Right" Width="75" Height="19" VerticalAlignment="Bottom" Click="btnOk_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,69,0,0" TextWrapping="Wrap" Text="输入第一个灯箱的id号码, 其后的所有灯箱的id号码以此为基础顺延下去" VerticalAlignment="Top" Width="235"/>
+
+    </Grid>
+</Window>

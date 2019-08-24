@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3176E56A-E0CE-4B4C-9B4B-7214036C43E4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>LightBoxRectSubForm</RootNamespace>
+    <AssemblyName>LightBoxRectSubForm</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="app\BaseConfig.cs" />
+    <Compile Include="app\BoxStateEventArgs.cs" />
+    <Compile Include="app\ConfigHelper.cs" />
+    <Compile Include="app\LightBoxHelper.cs" />
+    <Compile Include="app\MessageHelper.cs" />
+    <Compile Include="app\Untils.cs" />
+    <Compile Include="comm\ByteEventArgs.cs" />
+    <Compile Include="comm\Comm.cs" />
+    <Compile Include="comm\CommStateEventArgs.cs" />
+    <Compile Include="comm\DataComm.cs" />
+    <Compile Include="comm\SmsComm.cs" />
+    <Compile Include="comm\SmsCommDtuState.cs" />
+    <Compile Include="data\BytesWithInfo.cs" />
+    <Compile Include="data\CanDataWithInfo.cs" />
+    <Compile Include="data\LBModel.cs" />
+    <Compile Include="data\LBMsg.cs" />
+    <Compile Include="data\ModelWaitTime.cs" />
+    <Compile Include="data\ReadXmlHelper.cs" />
+    <Compile Include="data\WriteXmlHelper.cs" />
+    <Compile Include="dll\ECAN.cs" />
+    <Compile Include="dll\ECANHelper.cs" />
+    <Compile Include="FrmCommSettings.xaml.cs">
+      <DependentUpon>FrmCommSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="myView\CheckListBox.cs" />
+    <Compile Include="myView\LightBox.xaml.cs">
+      <DependentUpon>LightBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WidEditLBMsg.xaml.cs">
+      <DependentUpon>WidEditLBMsg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WidTest.xaml.cs">
+      <DependentUpon>WidTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidAllKeepTime.xaml.cs">
+      <DependentUpon>WidAllKeepTime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidAllRunTime.xaml.cs">
+      <DependentUpon>WidAllRunTime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidFirstId.xaml.cs">
+      <DependentUpon>WidFirstId.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidId.xaml.cs">
+      <DependentUpon>WidId.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidLightBoxEdit.xaml.cs">
+      <DependentUpon>WidLightBoxEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidSetId.xaml.cs">
+      <DependentUpon>WidSetId.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windows\WidShowBoxes.xaml.cs">
+      <DependentUpon>WidShowBoxes.xaml</DependentUpon>
+    </Compile>
+    <Page Include="FrmCommSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="myView\LightBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WidEditLBMsg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WidTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidAllKeepTime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidAllRunTime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidFirstId.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidId.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidLightBoxEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidSetId.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\WidShowBoxes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,158 @@
+﻿<Window x:Class="LightBoxRectSubForm.WidEditLBMsg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LightBoxRectSubForm"
+        mc:Ignorable="d"
+        Title="编辑" Height="207.25" Width="424.283">
+    <Grid>
+        <TextBox x:Name="txtName" Height="23" Margin="152,24,92.6,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button x:Name="btnCancel" Content="取消" HorizontalAlignment="Right" Margin="0,148,25.6,0" VerticalAlignment="Top" Width="66" Click="btnCancel_Click"/>
+        <Button x:Name="btnOk" Content="确定" HorizontalAlignment="Right" Margin="0,148,107.6,0" VerticalAlignment="Top" Width="66" Click="btnOk_Click"/>
+        <Label Content="名称:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="88,21,0,0"/>
+        <Label Content="停留时间:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="88,52,0,0"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59"/>
+        <ComboBox x:Name="comboBoxMinute" HorizontalAlignment="Left" Margin="154,57,0,0" VerticalAlignment="Top" Width="59" SelectionChanged="comboBoxMinute_SelectionChanged">
+            <ComboBoxItem Content="00"/>
+            <ComboBoxItem Content="01"/>
+            <ComboBoxItem Content="02"/>
+            <ComboBoxItem Content="03"/>
+            <ComboBoxItem Content="04"/>
+            <ComboBoxItem Content="05"/>
+            <ComboBoxItem Content="06"/>
+            <ComboBoxItem Content="07"/>
+            <ComboBoxItem Content="08"/>
+            <ComboBoxItem Content="09"/>
+            <ComboBoxItem Content="10"/>
+            <ComboBoxItem Content="11"/>
+            <ComboBoxItem Content="12"/>
+            <ComboBoxItem Content="13"/>
+            <ComboBoxItem Content="14"/>
+            <ComboBoxItem Content="15"/>
+            <ComboBoxItem Content="16"/>
+            <ComboBoxItem Content="17"/>
+            <ComboBoxItem Content="18"/>
+            <ComboBoxItem Content="19"/>
+            <ComboBoxItem Content="20"/>
+            <ComboBoxItem Content="21"/>
+            <ComboBoxItem Content="22"/>
+            <ComboBoxItem Content="23"/>
+            <ComboBoxItem Content="24"/>
+            <ComboBoxItem Content="25"/>
+            <ComboBoxItem Content="26"/>
+            <ComboBoxItem Content="27"/>
+            <ComboBoxItem Content="28"/>
+            <ComboBoxItem Content="29"/>
+            <ComboBoxItem Content="30"/>
+            <ComboBoxItem Content="31"/>
+            <ComboBoxItem Content="32"/>
+            <ComboBoxItem Content="33"/>
+            <ComboBoxItem Content="34"/>
+            <ComboBoxItem Content="35"/>
+            <ComboBoxItem Content="36"/>
+            <ComboBoxItem Content="37"/>
+            <ComboBoxItem Content="38"/>
+            <ComboBoxItem Content="39"/>
+            <ComboBoxItem Content="40"/>
+            <ComboBoxItem Content="41"/>
+            <ComboBoxItem Content="42"/>
+            <ComboBoxItem Content="43"/>
+            <ComboBoxItem Content="44"/>
+            <ComboBoxItem Content="45"/>
+            <ComboBoxItem Content="46"/>
+            <ComboBoxItem Content="47"/>
+            <ComboBoxItem Content="48"/>
+            <ComboBoxItem Content="49"/>
+            <ComboBoxItem Content="50"/>
+            <ComboBoxItem Content="51"/>
+            <ComboBoxItem Content="52"/>
+            <ComboBoxItem Content="53"/>
+            <ComboBoxItem Content="54"/>
+            <ComboBoxItem Content="55"/>
+            <ComboBoxItem Content="56"/>
+            <ComboBoxItem Content="57"/>
+            <ComboBoxItem Content="58"/>
+            <ComboBoxItem Content="59"/>
+        </ComboBox>
+        <Label Content="分" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="218,52,0,0" Width="24"/>
+        <ComboBox x:Name="comboBoxSeconds" HorizontalAlignment="Left" Margin="244,57,0,0" VerticalAlignment="Top" Width="59" SelectionChanged="comboBoxSeconds_SelectionChanged">
+            <ComboBoxItem Content="00"/>
+            <ComboBoxItem Content="01"/>
+            <ComboBoxItem Content="02"/>
+            <ComboBoxItem Content="03"/>
+            <ComboBoxItem Content="04"/>
+            <ComboBoxItem Content="05"/>
+            <ComboBoxItem Content="06"/>
+            <ComboBoxItem Content="07"/>
+            <ComboBoxItem Content="08"/>
+            <ComboBoxItem Content="09"/>
+            <ComboBoxItem Content="10"/>
+            <ComboBoxItem Content="11"/>
+            <ComboBoxItem Content="12"/>
+            <ComboBoxItem Content="13"/>
+            <ComboBoxItem Content="14"/>
+            <ComboBoxItem Content="15"/>
+            <ComboBoxItem Content="16"/>
+            <ComboBoxItem Content="17"/>
+            <ComboBoxItem Content="18"/>
+            <ComboBoxItem Content="19"/>
+            <ComboBoxItem Content="20"/>
+            <ComboBoxItem Content="21"/>
+            <ComboBoxItem Content="22"/>
+            <ComboBoxItem Content="23"/>
+            <ComboBoxItem Content="24"/>
+            <ComboBoxItem Content="25"/>
+            <ComboBoxItem Content="26"/>
+            <ComboBoxItem Content="27"/>
+            <ComboBoxItem Content="28"/>
+            <ComboBoxItem Content="29"/>
+            <ComboBoxItem Content="30"/>
+            <ComboBoxItem Content="31"/>
+            <ComboBoxItem Content="32"/>
+            <ComboBoxItem Content="33"/>
+            <ComboBoxItem Content="34"/>
+            <ComboBoxItem Content="35"/>
+            <ComboBoxItem Content="36"/>
+            <ComboBoxItem Content="37"/>
+            <ComboBoxItem Content="38"/>
+            <ComboBoxItem Content="39"/>
+            <ComboBoxItem Content="40"/>
+            <ComboBoxItem Content="41"/>
+            <ComboBoxItem Content="42"/>
+            <ComboBoxItem Content="43"/>
+            <ComboBoxItem Content="44"/>
+            <ComboBoxItem Content="45"/>
+            <ComboBoxItem Content="46"/>
+            <ComboBoxItem Content="47"/>
+            <ComboBoxItem Content="48"/>
+            <ComboBoxItem Content="49"/>
+            <ComboBoxItem Content="50"/>
+            <ComboBoxItem Content="51"/>
+            <ComboBoxItem Content="52"/>
+            <ComboBoxItem Content="53"/>
+            <ComboBoxItem Content="54"/>
+            <ComboBoxItem Content="55"/>
+            <ComboBoxItem Content="56"/>
+            <ComboBoxItem Content="57"/>
+            <ComboBoxItem Content="58"/>
+            <ComboBoxItem Content="59"/>
+        </ComboBox>
+        <Label Content="秒" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="308,52,0,0" Width="24"/>
+        <CheckBox x:Name="cbRunAll" Content="全网运行" HorizontalAlignment="Left" Margin="88,91,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnDelete" Content="删除" HorizontalAlignment="Right" Margin="0,148,263.6,0" VerticalAlignment="Top" Width="66" Click="btnDelete_Click"/>
+
+    </Grid>
+</Window>

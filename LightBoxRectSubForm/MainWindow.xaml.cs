@@ -2,6 +2,7 @@
 using LightBoxRectSubForm.comm;
 using LightBoxRectSubForm.data;
 using LightBoxRectSubForm.dll;
+using LightBoxRectSubForm.netty;
 using LightBoxRectSubForm.windows;
 using Microsoft.Win32;
 using NLog;
@@ -20,12 +21,17 @@ namespace LightBoxRectSubForm
     public partial class MainWindow : Window
     {
         public static Logger logger = LogManager.GetLogger("MainWindow");
-
+        public static MainWindow ins;
         private static System.Diagnostics.Process pPreview;
+
+        public SynchronizationContext m_SyncContext = null;
+        bool suspend = false;
 
         public MainWindow()
         {
             InitializeComponent();
+            m_SyncContext = SynchronizationContext.Current;
+            ins = this;
             //logger.Info("indo");
             //logger.Error("error");
             ThreadPool.SetMinThreads(1000, 500);
@@ -55,6 +61,8 @@ namespace LightBoxRectSubForm
             Console.WriteLine(path + ",," + str1);
 
             LightBoxHelper.startCheckSysTimeThread();
+
+            NettyHelper.start();
 
         }
 
@@ -142,15 +150,80 @@ namespace LightBoxRectSubForm
             SmsComm.ins.close();
         }
 
+        public void runBegin() {
+            if (LightBoxHelper.isRunning) {
+                return;
+            }
+            LightBoxHelper.isRunning = true;
+            m_SyncContext.Post(runBeginOnUI, null);
+        }
+
+        private void runBeginOnUI(object obj) {
+            btnRunStop.Content = "停止";
+            btnPaush.Content = "暂停";
+            btnPaush.IsEnabled = true;
+            LightBoxHelper.start();
+            btnReloadModels.IsEnabled = false;
+        }
+
+        public void runStop() {
+            if (!LightBoxHelper.isRunning) {
+                return;
+            }
+            LightBoxHelper.isRunning = false;
+            m_SyncContext.Post(runStopOnUI, null);
+        }
+
+        private void runStopOnUI(object obj) {
+            btnRunStop.Content = "运行";
+            btnPaush.Content = "继续";
+            btnPaush.IsEnabled = false;
+            LightBoxHelper.stop();
+            btnReloadModels.IsEnabled = true;
+        }
+
+        public void pasued() {
+            m_SyncContext.Post(pasuedOnUI, null);
+        }
+
+        private void pasuedOnUI(object obj) {
+            suspend = true;
+            LightBoxHelper.setSuspend();
+            btnPaush.Content = "继续";
+        }
+
+        public void resume() {
+            if (!LightBoxHelper.isRunning) {
+                runBegin();
+                return;
+            }
+            m_SyncContext.Post(resumeOnUI, null);
+
+        }
+
+        private void resumeOnUI(object obj) {
+            suspend = false;
+            LightBoxHelper.setResume();
+            btnPaush.Content = "暂停";
+        }
+
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        /// <param name="o"></param>
+        public void Suspend(object o) {
+            if (suspend) {
+                resume();
+            } else {
+                pasued();
+            }
+        }
+        
         private void btnRunStop_Click(object sender, RoutedEventArgs e) {
             if (LightBoxHelper.isRunning) {
-                btnRunStop.Content = "运行";
-                LightBoxHelper.stop();
-                btnReloadModels.IsEnabled = true;
+                runStop();
             } else {
-                btnRunStop.Content = "停止";
-                LightBoxHelper.start();
-                btnReloadModels.IsEnabled = false;
+                runBegin();
             }
         }
 
@@ -318,6 +391,10 @@ namespace LightBoxRectSubForm
         private void menuAllBack_Click(object sender, RoutedEventArgs e) {
             CanDataWithInfo can3 = new CanDataWithInfo(0x700, new byte[] { 8, 0x80, }, "can:0x700, len:7 全网反");
             ECANHelper.ins.sendMessageWithInfo(can3);
+        }
+
+        private void btnPaush_Click(object sender, RoutedEventArgs e) {
+            Suspend(null);
         }
     }
 }

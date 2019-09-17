@@ -67,7 +67,9 @@ namespace LightBoxRectSubForm.dll {
         }
 
         public void closeDevice() {
-            ECANDLL.CloseDevice(4, 0);
+            try {
+                ECANDLL.CloseDevice(4, 0);
+            } catch (Exception) { }
             closeResult(true);
         }
 

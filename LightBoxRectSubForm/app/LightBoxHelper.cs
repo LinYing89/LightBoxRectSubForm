@@ -27,6 +27,13 @@ namespace LightBoxRectSubForm.app {
 
         private static Thread th;
 
+        //线程是否临时等待
+        private static bool WAITED = false;
+        //线程是否临临时运行一次
+        private static bool RUN_ONCE = false;
+        //当前模式结束后暂停
+        private static bool PUSED_WHEN_MODEL_OVER = false;
+
         public static LBModel SelectedModel {
             get {
                 if (null == selectedModel) {
@@ -201,6 +208,64 @@ namespace LightBoxRectSubForm.app {
             WriteXmlHelper.saveModel(nowModel);
         }
 
+        //复位
+        public static void reset() {
+            if (listModel.Count == 0) {
+                return;
+            }
+            WAITED = true;
+            changeModel(listModel[0]);
+            if (th != null) {
+                th.Interrupt();
+                RUN_ONCE = true;
+                PUSED_WHEN_MODEL_OVER = true;
+                setResume();
+            }
+
+            //Form1.selectLBModel = Form1.listLBModels[0];
+            WAITED = false;
+        }
+
+
+        //上一页
+        public static void prevPage() {
+            if (listModel.Count == 0) {
+                return;
+            }
+            prevModel(null);
+            WAITED = true;
+            if (th != null) {
+                th.Interrupt();
+                if (th.ThreadState.ToString().Contains(System.Threading.ThreadState.Suspended.ToString())) {
+                    Console.WriteLine("暂停");
+                    RUN_ONCE = true;
+                    setResume();
+                }
+            }
+            WAITED = false;
+        }
+
+        //下一页
+        public static void nextPage() {
+            if (listModel.Count == 0) {
+                return;
+            }
+            WAITED = true;
+            nextModel(null);
+            if (th != null) {
+                th.Interrupt();
+                if (th.ThreadState.ToString().Contains(System.Threading.ThreadState.Suspended.ToString())) {
+                    Console.WriteLine("暂停");
+                    RUN_ONCE = true;
+                    setResume();
+                }
+            }
+
+            WAITED = false;
+
+        }
+
+
         private static void startTurnPicThread() {
             th = new Thread(new ThreadStart(analysis));
             th.Name = "turnPic";
@@ -217,9 +282,30 @@ namespace LightBoxRectSubForm.app {
         }
 
         public static void stop() {
+            RUN_ONCE = false;
+            WAITED = false;
+            PUSED_WHEN_MODEL_OVER = false;
             if (th != null) {
                 isRunning = false;
                 th.Interrupt();
+            }
+        }
+
+        public static void setSuspend() {
+            if (th != null) {
+                try {
+                    if (!th.ThreadState.ToString().Contains(System.Threading.ThreadState.Suspended.ToString())) {
+                        th.Suspend();
+                    }
+                } catch (Exception) { }
+            }
+        }
+
+        public static void setResume() {
+            if (th != null) {
+                try {
+                    th.Resume();
+                } catch (Exception) { }
             }
         }
 
@@ -234,6 +320,24 @@ namespace LightBoxRectSubForm.app {
                 modelChanging = true;
                 ThreadPool.QueueUserWorkItem(new WaitCallback(nextModel), null);
             }
+        }
+
+        private static void prevModel(object obj) {
+            modelIndex--;
+            if(modelIndex <= 0){
+                modelIndex = listModel.Count - 1;
+            }
+            LBModel nextModel = prevActiveModel();
+            if (null == nextModel) {
+                return;
+            }
+            if (!nextModel.ModelName.Equals(SelectedModel)) {
+                setModelSelected(nextModel);
+            }
+            //初始化等待时间
+            //nextModel.getListWaitTime();
+            modelChanging = false;
+
         }
 
         private static void nextModel(object obj) {
@@ -287,12 +391,44 @@ namespace LightBoxRectSubForm.app {
             if(null == model) {
                 videoBegin = false;
                 //选择第一个模式
-                modelIndex = 1;
+                //modelIndex = 1;
             }
 
             //如果没找到再从0的位置找到modelIndex位置
             if (null == model) {
                 for (int i = 0; i < modelIndex; i++) {
+                    LBModel m = listModel[i];
+                    if (m.Active) {
+                        modelIndex = i;
+                        model = m;
+                        break;
+                    }
+                }
+            }
+            return model;
+        }
+
+        private static LBModel prevActiveModel() {
+            LBModel model = null;
+            //先从modelIndex位置往前找
+            for (int i = modelIndex; i >= 0; i--) {
+                LBModel m = listModel[i];
+                if (m.Active) {
+                    modelIndex = i;
+                    model = m;
+                    break;
+                }
+            }
+
+            if (null == model) {
+                videoBegin = false;
+                //选择第一个模式
+                //modelIndex = 1;
+            }
+
+            //如果没找到再从0的位置找到modelIndex位置
+            if (null == model) {
+                for (int i = listModel.Count - 1; i >= modelIndex; i--) {
                     LBModel m = listModel[i];
                     if (m.Active) {
                         modelIndex = i;
@@ -338,7 +474,7 @@ namespace LightBoxRectSubForm.app {
                 try {
                     //BaseConfig.ins.IsPowerOn = true;
                     //如果开机时间没到，不往下运行
-                    if (!BaseConfig.ins.IsPowerOn) {
+                    if (!BaseConfig.ins.IsPowerOn || WAITED) {
                         Console.WriteLine(" off time");
                         try {
                             Thread.Sleep(1000);
@@ -421,20 +557,27 @@ namespace LightBoxRectSubForm.app {
                     //    Thread.Sleep(2000);
                     //    outTimeCount++;
                     //}
-                    int modelWaitTime = SelectedModel.getWaitTimeMS();
-                    byte backTime = 1;
-                    if(modelWaitTime > 1) {
-                        backTime = (byte)(modelWaitTime - 1);
+                    if (RUN_ONCE) {
+                        //临时运行一次结束
+                        RUN_ONCE = false;
+                        //暂停
+                        MainWindow.ins.pasued();
+                    } else {
+                        int modelWaitTime = SelectedModel.getWaitTimeMS();
+                        byte backTime = 1;
+                        if (modelWaitTime > 1) {
+                            backTime = (byte)(modelWaitTime - 1);
+                        }
+                        //nextModelThread();
+                        //nextModel(null);
+                        //全网反转
+                        CanDataWithInfo can = new CanDataWithInfo(0x700, new byte[] { backTime, 0x80, }, "can:0x700, len:7 退全网");
+                        //ECANHelper.ins.sendMessageWithInfo(can);
+                        //Debug.Log("进入等待时间 :" + modelWaitTime);
+                        //这里的模式停留时间要从最后一个灯箱转完算起
+                        Thread.Sleep(modelWaitTime);
+                        nextModel(null);
                     }
-                    //nextModelThread();
-                    //nextModel(null);
-                    //全网反转
-                    CanDataWithInfo can = new CanDataWithInfo(0x700, new byte[] { backTime, 0x80,}, "can:0x700, len:7 退全网");
-                    //ECANHelper.ins.sendMessageWithInfo(can);
-                    //Debug.Log("进入等待时间 :" + modelWaitTime);
-                    //这里的模式停留时间要从最后一个灯箱转完算起
-                    Thread.Sleep(modelWaitTime);
-                    nextModel(null);
                     //Thread.Sleep(2000);
                     //Debug.Log("等待时间结束 :" + modelWaitTime);
                 } catch (Exception e) {

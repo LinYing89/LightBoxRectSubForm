@@ -47,12 +47,12 @@ namespace LightBoxRectSubForm
             listBoxModels.ItemsSource = LightBoxHelper.listModel;
 
             //SmsComm.ins.eventStateChanged += SmsComm_eventStateChanged;
-            //DataComm.ins.eventStateChanged += DataSms_eventStateChanged;
+            DataComm.ins.eventStateChanged += DataVideo_eventStateChanged;
             ECANHelper.ins.eventStateChanged += DataSms_eventStateChanged;
             ECANHelper.ins.eventBoxStateChanged += Ins_eventBoxStateChanged;
 
-            //DataComm.ins.init();
-            //DataComm.ins.open();
+            DataComm.ins.init();
+            DataComm.ins.open();
             //SmsComm.ins.init();
             //SmsComm.ins.open();
 
@@ -64,6 +64,7 @@ namespace LightBoxRectSubForm
 
             NettyHelper.start();
 
+            ECANHelper.ins.openDevice();
         }
 
         private void Ins_eventBoxStateChanged(object sender, BoxStateEventArgs e) {
@@ -100,6 +101,18 @@ namespace LightBoxRectSubForm
             
         }
 
+        private void DataVideo_eventStateChanged(object sender, CommStateEventArgs e) {
+            labelVideoCommState.Dispatcher.Invoke(new Action(() => {
+                labelVideoCommState.Content = e.message;
+                if (e.opened) {
+                    btnVideoCommOpenClose_Copy.Content = "关闭";
+                } else {
+                    btnVideoCommOpenClose_Copy.Content = "打开";
+                }
+            }));
+
+        }
+
         private void SmsComm_eventStateChanged(object sender, CommStateEventArgs e) {
             labelSmsCommState.Dispatcher.Invoke(new Action(()=> {
                 labelSmsCommState.Content = e.message;
@@ -118,6 +131,11 @@ namespace LightBoxRectSubForm
             frm.Show();
         }
 
+        private void menuSmsCommSet_Click(object sender, RoutedEventArgs e) {
+            FrmCommSettings frm = new FrmCommSettings(SmsComm.ins);
+            frm.Show();
+        }
+
         private void btnSmsCommOpenClose_Click(object sender, RoutedEventArgs e) {
             if (btnSmsCommOpenClose.Content.Equals("打开")) {
                 SmsComm.ins.open();
@@ -125,12 +143,7 @@ namespace LightBoxRectSubForm
                 SmsComm.ins.close();
             }
         }
-
-        private void menuSmsCommSet_Click(object sender, RoutedEventArgs e) {
-            FrmCommSettings frm = new FrmCommSettings(SmsComm.ins);
-            frm.Show();
-        }
-
+        
         private void btnDataCommOpenClose_Click(object sender, RoutedEventArgs e) {
             if (btnDataCommOpenClose.Content.Equals("打开")) {
                 //DataComm.ins.open();
@@ -142,10 +155,18 @@ namespace LightBoxRectSubForm
             }
         }
 
+        private void btnVideoCommOpenClose_Click(object sender, RoutedEventArgs e) {
+            if (btnVideoCommOpenClose_Copy.Content.Equals("打开")) {
+                DataComm.ins.open();
+            } else {
+                DataComm.ins.close();
+            }
+        }
+
         private void Window_Closed(object sender, EventArgs e) {
             SmsComm.ins.eventStateChanged -= SmsComm_eventStateChanged;
-            //DataComm.ins.eventStateChanged -= DataSms_eventStateChanged;
-            //DataComm.ins.close();
+            DataComm.ins.eventStateChanged -= DataSms_eventStateChanged;
+            DataComm.ins.close();
             ECANHelper.ins.closeDevice();
             SmsComm.ins.close();
         }
@@ -154,7 +175,7 @@ namespace LightBoxRectSubForm
             if (LightBoxHelper.isRunning) {
                 return;
             }
-            LightBoxHelper.isRunning = true;
+            //LightBoxHelper.isRunning = true;
             m_SyncContext.Post(runBeginOnUI, null);
         }
 
@@ -231,28 +252,75 @@ namespace LightBoxRectSubForm
             bool powerRun = (bool)menuRunOnPower.IsChecked;
             ConfigHelper.WriteConfig(ConfigHelper.APPLICATION, ConfigHelper.POWER_RUN, Convert.ToString(powerRun));
             ConfigHelper.IS_POWER_RUN = powerRun;
+            string appName = Process.GetCurrentProcess().MainModule.ModuleName;
+            //string appPath = Process.GetCurrentProcess().MainModule.FileName;
+            string appPath = System.AppDomain.CurrentDomain.BaseDirectory + appName;
+            SelfRunning(true, appName, appPath);
             //设置开机自启动 
             //MessageBox.Show("设置开机自启动，需要修改注册表", "提示");
-            string path = Process.GetCurrentProcess().MainModule.FileName;
-            RegistryKey rk = Registry.CurrentUser;
-            RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
-            rk2.SetValue("LightBoxRect", path);
-            rk2.Close();
-            rk.Close();
+            //string path = Process.GetCurrentProcess().MainModule.FileName;
+            //string path = Application.ExecutablePath;
+            //RegistryKey rk = Registry.CurrentUser;
+            //RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+            //rk2.SetValue("LightBoxRect", path);
+            //rk2.Close();
+            //rk.Close();
         }
 
         private void menuRunOnPower_Unchecked(object sender, RoutedEventArgs e) {
             bool powerRun = (bool)menuRunOnPower.IsChecked;
             ConfigHelper.WriteConfig(ConfigHelper.APPLICATION, ConfigHelper.POWER_RUN, Convert.ToString(powerRun));
             ConfigHelper.IS_POWER_RUN = powerRun;
+            string appName = Process.GetCurrentProcess().MainModule.ModuleName;
+            //string appPath = Process.GetCurrentProcess().MainModule.FileName;
+            string appPath = System.AppDomain.CurrentDomain.BaseDirectory + appName;
+            SelfRunning(false, appName, appPath);
+
             //取消开机自启动 
             //MessageBox.Show("取消开机自启动，需要修改注册表", "提示");
-            string path = Process.GetCurrentProcess().MainModule.FileName;
-            RegistryKey rk = Registry.CurrentUser;
-            RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
-            rk2.DeleteValue("LightBoxRect", false);
-            rk2.Close();
-            rk.Close();
+            //string path = Process.GetCurrentProcess().MainModule.FileName;
+            //RegistryKey rk = Registry.CurrentUser;
+            //RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+            //rk2.DeleteValue("LightBoxRect", false);
+            //rk2.Close();
+            //rk.Close();
+        }
+
+        /// <summary>
+        /// 写入或删除注册表键值对,即设为开机启动或开机不启动
+        /// </summary>
+        /// <param name="isStart">是否开机启动</param>
+        /// <param name="exeName">应用程序名</param>
+        /// <param name="path">应用程序路径带程序名</param>
+        /// <returns></returns>
+        private static bool SelfRunning(bool isStart, string exeName, string path) {
+            try {
+                RegistryKey local = Registry.LocalMachine;
+                RegistryKey key = local.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                if (key == null) {
+                    local.CreateSubKey("SOFTWARE//Microsoft//Windows//CurrentVersion//Run");
+                }
+                //若开机自启动则添加键值对
+                if (isStart) {
+                    key.SetValue(exeName, path);
+                    key.Close();
+                } else//否则删除键值对
+                  {
+                    string[] keyNames = key.GetValueNames();
+                    foreach (string keyName in keyNames) {
+                        if (keyName.ToUpper() == exeName.ToUpper()) {
+                            //key.DeleteValue(exeName);
+                            //key.Close();
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                string ss = ex.Message;
+                return false;
+                //throw;
+            }
+
+            return true;
         }
 
         private void btnReloadModels_Click(object sender, RoutedEventArgs e) {
@@ -395,6 +463,11 @@ namespace LightBoxRectSubForm
 
         private void btnPaush_Click(object sender, RoutedEventArgs e) {
             Suspend(null);
+        }
+
+        private void menuOnOffTimeSet_Click(object sender, RoutedEventArgs e) {
+            WidOnOffTimeSet widOnOffTimeSet = new WidOnOffTimeSet();
+            widOnOffTimeSet.ShowDialog();
         }
     }
 }

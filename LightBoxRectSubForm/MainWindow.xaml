@@ -7,8 +7,8 @@
         xmlns:local1="clr-namespace:LightBoxRectSubForm.myView"
         mc:Ignorable="d"
         Title="MainWindow" Height="383" Width="570.4" Closed="Window_Closed" Closing="Window_Closing">
-    
-    
+
+
     <Grid Margin="0,0,-6,-0.4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*"/>
@@ -32,10 +32,10 @@
         <Label Content="当前模式" Margin="12,66,7.2,0" VerticalAlignment="Top" Height="26"/>
         <Label x:Name="labelModelName" Content="Label" HorizontalAlignment="Left" Margin="12.8,66,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="201"/>
         <Label Content="串口状态" Margin="12,106,7.2,0" VerticalAlignment="Top" Height="26"/>
-        <Label Content="数据口:" Grid.Column="1" HorizontalAlignment="Left" Margin="12.8,106,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
+        <Label Content="USB数据口:" Grid.Column="1" HorizontalAlignment="Left" Margin="12.8,106,0,0" VerticalAlignment="Top" Height="26" Width="75"/>
         <Label Content="短信串口:" Grid.Column="1" HorizontalAlignment="Left" Margin="12.8,137,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
-        <Label x:Name="labelDataCommState" Content="已关闭" Grid.Column="1" HorizontalAlignment="Left" Margin="75.8,106,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
-        <Label x:Name="labelSmsCommState" Content="已关闭" Grid.Column="1" HorizontalAlignment="Left" Margin="75.8,137,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
+        <Label x:Name="labelDataCommState" Content="已关闭" Grid.Column="1" HorizontalAlignment="Left" Margin="81.8,106,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
+        <Label x:Name="labelSmsCommState" Content="已关闭" Grid.Column="1" HorizontalAlignment="Left" Margin="81.8,137,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
         <Button x:Name="btnDataCommOpenClose" Content="打开" Grid.Column="1" HorizontalAlignment="Left" Margin="138.8,109,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="btnDataCommOpenClose_Click"/>
         <Button x:Name="btnSmsCommOpenClose" Content="打开" Grid.Column="1" HorizontalAlignment="Left" Margin="138.8,140,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="btnSmsCommOpenClose_Click"/>
         <Button x:Name="btnRunStop" Content="运行" Grid.Column="1" HorizontalAlignment="Left" Margin="12.8,207,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="btnRunStop_Click"/>
@@ -45,6 +45,8 @@
             <MenuItem Header="设置" Height="29">
                 <MenuItem x:Name="menuSmsCommSet" Header="短信串口设置" Click="menuSmsCommSet_Click"/>
                 <MenuItem x:Name="menuSmsDtuSet" Header="短信模块设置"/>
+                <MenuItem x:Name="menuVideoCommSet" Header="视频串口设置" Click="MenuItemDataCommSet_Click"/>
+                <MenuItem x:Name="menuOnOffTimeSet" Header="开关机时间设置" Click="menuOnOffTimeSet_Click"/>
                 <CheckBox x:Name="menuRunOnPower" Content="开机启动" Checked="menuRunOnPower_Checked" Unchecked="menuRunOnPower_Unchecked"/>
                 <CheckBox x:Name="menuWaitVideo" Content="等待视频信号" Checked="menuWaitVideo_Checked" Unchecked="menuWaitVideo_Unchecked"/>
             </MenuItem>
@@ -65,6 +67,9 @@
         <Label Content="矩阵:" Margin="12,35,7.2,0" VerticalAlignment="Top" Height="26"/>
         <Label x:Name="labelRowColumn" Content="" HorizontalAlignment="Left" Margin="12.8,35,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="201"/>
         <Button x:Name="btnPaush" Content="暂停" Grid.Column="1" HorizontalAlignment="Left" Margin="12.8,231,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="btnPaush_Click" IsEnabled="False"/>
+        <Label Content="视频串口:" Grid.Column="1" HorizontalAlignment="Left" Margin="12.8,168,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
+        <Label x:Name="labelVideoCommState" Content="已关闭" Grid.Column="1" HorizontalAlignment="Left" Margin="81.8,168,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
+        <Button x:Name="btnVideoCommOpenClose_Copy" Content="打开" Grid.Column="1" HorizontalAlignment="Left" Margin="138.8,171,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="btnVideoCommOpenClose_Click"/>
 
     </Grid>
 </Window>

@@ -57,10 +57,10 @@ namespace LightBoxRectSubForm.app {
         public void init() {
             Rows = Convert.ToInt32(ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.ROWS));
             Columns = Convert.ToInt32(ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.COLUMNS));
-            PowerOnA = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOnA);
-            PowerOffA = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOffA);
-            PowerOnB = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOnB);
-            PowerOffB = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOffB);
+            PowerOnA = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOnA, "6:00");
+            PowerOffA = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOffA, "11:00");
+            PowerOnB = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOnB, "13:00");
+            PowerOffB = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.powerOffB, "23:00");
             PhoneNum = ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.phoneNum);
             SmsModel = Convert.ToInt32(ConfigHelper.ReadConfig(ConfigHelper.LightBoxNote, ConfigHelper.smsModel));
             boxCount = Rows * Columns;

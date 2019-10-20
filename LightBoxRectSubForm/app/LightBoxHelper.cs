@@ -1,6 +1,7 @@
 ﻿using LightBoxRectSubForm.comm;
 using LightBoxRectSubForm.data;
 using LightBoxRectSubForm.dll;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ namespace LightBoxRectSubForm.app {
     public class LightBoxHelper {
 
         public static event EventHandler modelChanged;
+        public static Logger logger = LogManager.GetLogger("LightBoxHelper");
 
         public static bool isRunning;
         public static bool videoBegin = true;
@@ -475,7 +477,9 @@ namespace LightBoxRectSubForm.app {
                     //BaseConfig.ins.IsPowerOn = true;
                     //如果开机时间没到，不往下运行
                     if (!BaseConfig.ins.IsPowerOn || WAITED) {
-                        Console.WriteLine(" off time");
+                        //Console.WriteLine(" off time");
+                        Console.WriteLine(" Power Off");
+                        logger.Info(" Power Off");
                         try {
                             Thread.Sleep(1000);
                         } catch (Exception) {
@@ -483,6 +487,8 @@ namespace LightBoxRectSubForm.app {
                         }
                         continue;
                     }
+                    Console.WriteLine(" Power On");
+                    logger.Info(" Power On");
                     //videoBegin = true;
                     if (ConfigHelper.IS_WAIT_VIDEO) {
                         //视频未开始, 等待
@@ -606,7 +612,7 @@ namespace LightBoxRectSubForm.app {
                         || (time >= ipnb && time < ipfb)) {
                         BaseConfig.ins.IsPowerOn = true;
                     } else {
-                        //BaseConfig.ins.IsPowerOn = false;
+                        BaseConfig.ins.IsPowerOn = false;
                     }
                     if (now.Hour == 23 && now.Minute == 59 && now.Second == 59) {
                         MessageHelper.ins.searchBoxes();

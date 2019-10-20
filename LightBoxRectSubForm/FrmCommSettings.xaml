@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LightBoxRectSubForm"
         mc:Ignorable="d"
-        Title="串口设置" Height="257.2" Width="295.523">
+        Title="视频串口设置" Height="257.2" Width="295.523">
     <Grid Margin="0,0,-0.4,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="103*"/>

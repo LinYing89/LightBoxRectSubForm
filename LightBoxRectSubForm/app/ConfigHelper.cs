@@ -99,9 +99,18 @@ namespace LightBoxRectSubForm.app {
         /// <param name="key">键</param>
         /// <returns></returns>
         public static string ReadConfig(string Section, string key) {
-
+            string appPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            string file = appPath + fileName;
             StringBuilder temp = new StringBuilder(1024);
-            GetPrivateProfileString(Section, key, "", temp, 255, fileName);
+            GetPrivateProfileString(Section, key, "", temp, 255, file);
+            return temp.ToString();
+        }
+
+        public static string ReadConfig(string Section, string key, string def) {
+            string appPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            string file = appPath + fileName;
+            StringBuilder temp = new StringBuilder(1024);
+            GetPrivateProfileString(Section, key, def, temp, 255, file);
             return temp.ToString();
         }
 
@@ -113,7 +122,9 @@ namespace LightBoxRectSubForm.app {
         /// <param name="key">键</param>
         /// <param name="value">值</param>
         public static void WriteConfig(string Section, string key, string value) {
-            WritePrivateProfileString(Section, key, value, fileName);
+            string appPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            string file = appPath + fileName;
+            WritePrivateProfileString(Section, key, value, file);
         }
 
         /// <summary>
@@ -123,7 +134,9 @@ namespace LightBoxRectSubForm.app {
         /// <param name="key"></param>
         /// <param name="value"></param>
         public static void WriteErrMsg(string Section, string key, string value) {
-            WritePrivateProfileString(Section, DateTime.Now.ToLongTimeString() + "-" + key, value, logFileName);
+            string appPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            string file = appPath + logFileName;
+            WritePrivateProfileString(Section, DateTime.Now.ToLongTimeString() + "-" + key, value, file);
         }
 
         public static void init() {

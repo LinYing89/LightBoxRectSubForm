@@ -51,6 +51,13 @@ namespace LightBoxRectSubForm.comm {
                             LightBoxHelper.videoBegin = true;
                         }
                     }
+                }else if (by == 0xFe) {
+                    byte b1 = readByte();
+                    byte b2 = readByte();
+                    if (b1 == 1 && b2 == 0x40) {
+                        //第一个视频开始播放命令
+                        LightBoxHelper.videoBegin = true;
+                    }
                 }
             }
             analysisRunning = false;

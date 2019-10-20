@@ -40,29 +40,33 @@ namespace LightBoxRectSubForm.dll {
         private bool analysisRunning = false;
 
         public void openDevice() {
-            INIT_CONFIG init_config = new INIT_CONFIG();
+            try {
+                INIT_CONFIG init_config = new INIT_CONFIG();
 
-            init_config.AccCode = 0;
-            init_config.AccMask = 0xffffff;
-            init_config.Filter = 0;
-            init_config.Timing0 = 0x00;
-            init_config.Timing1 = 0x1c;
-            init_config.Mode = model;
-            if (ECANDLL.OpenDevice(4, 0, 0) != ECAN.ECANStatus.STATUS_OK) {
-                openResult(false);
-                return;
-            }
-            //Set can1 baud
-            if (ECANDLL.InitCAN(4, 0, 0, ref init_config) != ECAN.ECANStatus.STATUS_OK) {
-                openResult(false);
-                ECANDLL.CloseDevice(1, 0);
-                return;
-            }
-            if (ECANDLL.StartCAN(1, 0, 0) == ECAN.ECANStatus.STATUS_OK) {
-                //MessageBox.Show("Start CAN1 Success");
-                openResult(true);
-            } else {
-                openResult(false);
+                init_config.AccCode = 0;
+                init_config.AccMask = 0xffffff;
+                init_config.Filter = 0;
+                init_config.Timing0 = 0x00;
+                init_config.Timing1 = 0x1c;
+                init_config.Mode = model;
+                if (ECANDLL.OpenDevice(4, 0, 0) != ECAN.ECANStatus.STATUS_OK) {
+                    openResult(false);
+                    return;
+                }
+                //Set can1 baud
+                if (ECANDLL.InitCAN(4, 0, 0, ref init_config) != ECAN.ECANStatus.STATUS_OK) {
+                    openResult(false);
+                    ECANDLL.CloseDevice(1, 0);
+                    return;
+                }
+                if (ECANDLL.StartCAN(1, 0, 0) == ECAN.ECANStatus.STATUS_OK) {
+                    //MessageBox.Show("Start CAN1 Success");
+                    openResult(true);
+                } else {
+                    openResult(false);
+                }
+            }catch(Exception e) {
+                logger.Error("ECAN 打开失败: " + e);
             }
         }
 

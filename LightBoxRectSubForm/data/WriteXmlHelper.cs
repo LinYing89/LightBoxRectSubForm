@@ -8,7 +8,7 @@ using System.Xml;
 namespace LightBoxRectSubForm.data {
     public class WriteXmlHelper {
         public static readonly string FILE_DOC = "doc\\";
-        public static readonly string FILE_MODEL = FILE_DOC + "model\\";
+        public static readonly string FILE_MODEL = System.AppDomain.CurrentDomain.BaseDirectory + FILE_DOC + "model\\";
 
         public static readonly string KEY_MODEL = "model";
         public static readonly string KEY_MODEL_ROTATE_ANGLE = "modelRotateAngle";

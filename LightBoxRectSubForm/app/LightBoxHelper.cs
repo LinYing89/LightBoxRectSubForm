@@ -19,7 +19,7 @@ namespace LightBoxRectSubForm.app {
         public static Logger logger = LogManager.GetLogger("LightBoxHelper");
 
         public static bool isRunning;
-        public static bool videoBegin = true;
+        public static bool videoBegin = false;
         public static bool quit = false;
         public static bool modelChanging = false;
 
@@ -495,6 +495,8 @@ namespace LightBoxRectSubForm.app {
                         if (!videoBegin) {
                             Thread.Sleep(200);
                             continue;
+                        } else {
+                            videoBegin = false;
                         }
                     }
 

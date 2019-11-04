@@ -63,6 +63,11 @@ namespace LightBoxRectSubForm.data {
                 XmlNode xmlWaitTime = xmlLBMsg.SelectSingleNode(WriteXmlHelper.KEY_WAIT_TIME);
                 lbmsg.WaitTime = Convert.ToDouble(xmlWaitTime.InnerText);
 
+                XmlNode xmlRepeatCount = xmlLBMsg.SelectSingleNode(WriteXmlHelper.KEY_REPEAT_COUNT);
+                if (null != xmlRepeatCount) { 
+                    lbmsg.RepeatCount = Convert.ToInt16(xmlRepeatCount.InnerText);
+                }
+
                 listLightBoxMsg.Add(lbmsg);
             }
             //} catch (NullReferenceException) {

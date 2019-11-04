@@ -131,6 +131,7 @@ namespace LightBoxRectSubForm.windows {
                         box.lBMsg.WaitTime = waitTime;
                         box.lBMsg.RunTime = wid.runTime;
                         box.lBMsg.KeepTime = wid.keepTime;
+                        box.lBMsg.RepeatCount = wid.repeatCount;
                         box.refresh();
                         box.setSelected();
                         box.setBackGroundColor(color);

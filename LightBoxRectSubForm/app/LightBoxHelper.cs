@@ -595,6 +595,94 @@ namespace LightBoxRectSubForm.app {
             }
         }
 
+        private static void analysis2() {
+            LBMsg lastLBMsg = null;
+            while (!quit && isRunning) {
+                try {
+                    //BaseConfig.ins.IsPowerOn = true;
+                    //如果开机时间没到，不往下运行
+                    if (!BaseConfig.ins.IsPowerOn || WAITED) {
+                        //Console.WriteLine(" off time");
+                        Console.WriteLine(" Power Off");
+                        logger.Info(" Power Off");
+                        try {
+                            Thread.Sleep(1000);
+                        } catch (Exception) {
+                            return;
+                        }
+                        continue;
+                    }
+                    Console.WriteLine(" Power On");
+                    logger.Info(" Power On");
+                    //videoBegin = true;
+                    if (ConfigHelper.IS_WAIT_VIDEO) {
+                        //视频未开始, 等待
+                        if (!videoBegin) {
+                            Thread.Sleep(200);
+                            continue;
+                        } else {
+                            videoBegin = false;
+                        }
+                    }
+
+                    if (null == SelectedModel) {
+                        //Thread.Sleep(1000);
+                        nextModel(null);
+                        continue;
+                    }
+                    MessageHelper.ins.beginModel();
+                    
+                    //获取模式中延时时间的集合
+                    if (SelectedModel.runAll) {
+                        LBMsg lBMsg = SelectedModel.ListLBMsg[0];
+                        byte time = (byte)(lBMsg.RunTime);
+                        CanDataWithInfo can1 = new CanDataWithInfo(0x700, new byte[] { time, 0x40, }, "can:0x700, len:7 全网正");
+                        ECANHelper.ins.sendMessageWithInfo(can1);
+                        Thread.Sleep((int)(lBMsg.RunTime * 1000));
+                        CanDataWithInfo can2 = new CanDataWithInfo(0x700, new byte[] { time, 0xC0, }, "can:0x700, len:7 全网停");
+                        ECANHelper.ins.sendMessageWithInfo(can2);
+                        Thread.Sleep((int)(lBMsg.KeepTime * 1000));
+                        CanDataWithInfo can3 = new CanDataWithInfo(0x700, new byte[] { time, 0x80, }, "can:0x700, len:7 全网反");
+                        ECANHelper.ins.sendMessageWithInfo(can3);
+                        Thread.Sleep((int)((lBMsg.RunTime + 2) * 1000));
+                    } else {
+                        foreach (LBMsg lbMsg in SelectedModel.ListLBMsg) {
+                            MessageHelper.ins.startRunBox(lbMsg);
+                            lastLBMsg = lbMsg;
+                        }
+                        while (!MessageHelper.ins.modelIsEnd()) {
+                            Thread.Sleep(200);
+                        }
+                        
+                    }
+                    if (RUN_ONCE) {
+                        //临时运行一次结束
+                        RUN_ONCE = false;
+                        //暂停
+                        MainWindow.ins.pasued();
+                    } else {
+                        int modelWaitTime = SelectedModel.getWaitTimeMS();
+                        byte backTime = 1;
+                        if (modelWaitTime > 1) {
+                            backTime = (byte)(modelWaitTime - 1);
+                        }
+                        //全网反转
+                        CanDataWithInfo can = new CanDataWithInfo(0x700, new byte[] { backTime, 0x80, }, "can:0x700, len:7 退全网");
+                        //ECANHelper.ins.sendMessageWithInfo(can);
+                        //Debug.Log("进入等待时间 :" + modelWaitTime);
+                        if (!ConfigHelper.IS_WAIT_VIDEO) {
+                            Thread.Sleep(modelWaitTime);
+                        }
+                        nextModel(null);
+                    }
+                    //Thread.Sleep(2000);
+                    //Debug.Log("等待时间结束 :" + modelWaitTime);
+                } catch (Exception e) {
+                    Console.WriteLine(e.StackTrace + ":" + e.Message);
+                    return;
+                }
+            }
+        }
         private static void checkSysTime() {
             DateTime now;
             while (!quit) {

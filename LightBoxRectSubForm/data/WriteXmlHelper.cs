@@ -25,6 +25,7 @@ namespace LightBoxRectSubForm.data {
         public static readonly string KEY_RUN_TIME = "runTime";
         public static readonly string KEY_KEEP_TIME = "keepTime";
         public static readonly string KEY_WAIT_TIME = "waitTime";
+        public static readonly string KEY_REPEAT_COUNT = "repeatCount";
 
         private static XmlDocument doc;
         private static XmlElement root;
@@ -98,12 +99,17 @@ namespace LightBoxRectSubForm.data {
                 XmlText txtlbWaitTime = doc.CreateTextNode(lbMsg.WaitTime.ToString());
                 xmlWaitTime.AppendChild(txtlbWaitTime);
 
+                XmlElement xmlRepeatCount = doc.CreateElement(KEY_REPEAT_COUNT);
+                XmlText txtlbRepeatCount = doc.CreateTextNode(lbMsg.RepeatCount.ToString());
+                xmlRepeatCount.AppendChild(txtlbRepeatCount);
+
                 xmlLightBox.AppendChild(xmlId);
                 xmlLightBox.AppendChild(xmlLBX);
                 xmlLightBox.AppendChild(xmlLBY);
                 xmlLightBox.AppendChild(xmlRunTime);
                 xmlLightBox.AppendChild(xmlKeepTime);
                 xmlLightBox.AppendChild(xmlWaitTime);
+                xmlLightBox.AppendChild(xmlRepeatCount);
 
                 root.AppendChild(xmlLightBox);
             }

@@ -22,6 +22,7 @@ namespace LightBoxRectSubForm.windows {
         public double waitTime = 0;
         public int runTime = 0;
         public int keepTime = 0;
+        public int repeatCount = 0;
         private LBMsg lBMsg;
 
         public WidLightBoxEdit(LBMsg lBMsg) {
@@ -30,6 +31,7 @@ namespace LightBoxRectSubForm.windows {
             tbWaitTime.Text = Convert.ToString(lBMsg.WaitTime);
             tbRunTime.Text = Convert.ToString(lBMsg.RunTime);
             tbKeepTime.Text = Convert.ToString(lBMsg.KeepTime);
+            tbRepeatCount.Text = Convert.ToString(lBMsg.RepeatCount);
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
@@ -37,6 +39,7 @@ namespace LightBoxRectSubForm.windows {
                 waitTime = Convert.ToDouble(tbWaitTime.Text);
                 runTime = Convert.ToInt32(tbRunTime.Text);
                 keepTime = Convert.ToInt32(tbKeepTime.Text);
+                repeatCount = Convert.ToInt16(tbRepeatCount.Text);
             } catch (Exception) {
                 MessageBox.Show("输入的值不正确");
             }

@@ -117,6 +117,39 @@ namespace LightBoxRectSubForm.app {
 
         }
 
+        public void runBoxRepeat(object obj) {
+            LBMsg lBMsg = obj as LBMsg;
+            if (lBMsg.RunTime > 0) {
+                int canId = createCanId(lBMsg.Id);
+                Thread.Sleep((int)lBMsg.WaitTime * 1000);
+                for (int i = 0; i < lBMsg.RepeatCount; i++) {
+                    byte[] by = new byte[8];
+                    //正转时间
+                    int runTime = (int)(lBMsg.RunTime);
+                    //保持时间
+                    int keepTime = (int)lBMsg.KeepTime;
+
+                    //灯箱属于 canid-电机id对应表中的那一列, 共4列
+                    int boxColumnInCanIdTable = createBoxByteIndex(lBMsg.Id);
+
+                    //正转
+                    //运转命令 00保留, 01正转, 10反转, 11停留
+                    CanDataWithInfo can = createRunBySend(boxColumnInCanIdTable, canId, 1, runTime);
+                    can.info = "id:" + lBMsg.Id + " 正 time:" + runTime;
+                    ECANHelper.ins.sendMessageWithInfo(can);
+
+                    Thread.Sleep((runTime + keepTime) * 1000);
+
+                    //反转, 反转时间+2 , 保证转到底
+                    CanDataWithInfo can2 = createRunBySend(boxColumnInCanIdTable, canId, 2, runTime + 1);
+                    can2.info = "id:" + lBMsg.Id + " 反 ";
+                    ECANHelper.ins.sendMessageWithInfo(can2);
+                    Thread.Sleep((runTime + 1) * 1000);
+                }
+            }
+            boxEndCount = boxEndCount + 1;
+        }
+
         public void startRunAllBox(LBMsg box) {
             ThreadPool.QueueUserWorkItem(new WaitCallback(runBox), box);
         }

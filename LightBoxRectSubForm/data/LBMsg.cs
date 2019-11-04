@@ -55,6 +55,9 @@ namespace LightBoxRectSubForm.data {
         private double keepTime = 4;
 
         private double runTime = 8;
+
+        private double repeatCount = 1;
+
         /// <summary>
         /// 灯箱正转的时间, 单位秒
         /// </summary>
@@ -80,6 +83,12 @@ namespace LightBoxRectSubForm.data {
                 keepTime = value;
             }
         }
+
+        /// <summary>
+        /// 重复几次
+        /// </summary>
+        public double RepeatCount { get => repeatCount; set => repeatCount = value; }
+
 
         #region ICloneable implementation
 

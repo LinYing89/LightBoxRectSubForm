@@ -22,6 +22,9 @@
         <Label Content="秒" HorizontalAlignment="Left" Margin="134,10,0,0" VerticalAlignment="Top" Height="26" Width="24" Grid.Column="1"/>
         <Label Content="秒" HorizontalAlignment="Left" Margin="134,38,0,0" VerticalAlignment="Top" Height="26" Width="24" Grid.Column="1"/>
         <Label Content="秒" HorizontalAlignment="Left" Margin="134,66,0,0" VerticalAlignment="Top" Height="26" Width="24" Grid.Column="1"/>
+        <Label Content="重复次数" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
+        <TextBox x:Name="tbRepeatCount" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="8.8,95,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="次" HorizontalAlignment="Left" Margin="133.8,95,0,0" VerticalAlignment="Top" Height="26" Width="24" Grid.Column="1"/>
 
     </Grid>
 </Window>

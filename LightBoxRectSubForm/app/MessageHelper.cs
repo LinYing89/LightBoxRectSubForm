@@ -63,7 +63,7 @@ namespace LightBoxRectSubForm.app {
         /// </summary>
         /// <param name="box"></param>
         public void startRunBox(LBMsg box) {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(runBox), box);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(runBoxRepeat), box);
         }
 
         //发送字节数据
@@ -119,6 +119,7 @@ namespace LightBoxRectSubForm.app {
 
         public void runBoxRepeat(object obj) {
             LBMsg lBMsg = obj as LBMsg;
+            Console.WriteLine(">>>>一个灯箱运行开始, id= " + lBMsg.Id);
             if (lBMsg.RunTime > 0) {
                 int canId = createCanId(lBMsg.Id);
                 Thread.Sleep((int)lBMsg.WaitTime * 1000);
@@ -145,9 +146,11 @@ namespace LightBoxRectSubForm.app {
                     can2.info = "id:" + lBMsg.Id + " 反 ";
                     ECANHelper.ins.sendMessageWithInfo(can2);
                     Thread.Sleep((runTime + 1) * 1000);
+                    Console.WriteLine(">>>>id= " + lBMsg.Id + " 的灯箱运行完 " + (i + 1) + " 次");
                 }
             }
             boxEndCount = boxEndCount + 1;
+            Console.WriteLine("====一个灯箱运行结束, id= " + lBMsg.Id + ", boxEndCount = " + boxEndCount);
         }
 
         public void startRunAllBox(LBMsg box) {

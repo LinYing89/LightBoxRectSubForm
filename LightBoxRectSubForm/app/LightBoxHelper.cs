@@ -269,7 +269,7 @@ namespace LightBoxRectSubForm.app {
 
 
         private static void startTurnPicThread() {
-            th = new Thread(new ThreadStart(analysis));
+            th = new Thread(new ThreadStart(analysis2));
             th.Name = "turnPic";
             th.IsBackground = true;
             th.Start();
@@ -372,6 +372,7 @@ namespace LightBoxRectSubForm.app {
                     lBMsg.WaitTime = lb.WaitTime;
                     lBMsg.RunTime = lb.RunTime;
                     lBMsg.KeepTime = lb.KeepTime;
+                    lBMsg.RepeatCount = lb.RepeatCount;
                 }
             }
             nextModel.getListWaitTime();
@@ -602,8 +603,6 @@ namespace LightBoxRectSubForm.app {
                     //BaseConfig.ins.IsPowerOn = true;
                     //如果开机时间没到，不往下运行
                     if (!BaseConfig.ins.IsPowerOn || WAITED) {
-                        //Console.WriteLine(" off time");
-                        Console.WriteLine(" Power Off");
                         logger.Info(" Power Off");
                         try {
                             Thread.Sleep(1000);
@@ -612,7 +611,6 @@ namespace LightBoxRectSubForm.app {
                         }
                         continue;
                     }
-                    Console.WriteLine(" Power On");
                     logger.Info(" Power On");
                     //videoBegin = true;
                     if (ConfigHelper.IS_WAIT_VIDEO) {
@@ -653,8 +651,8 @@ namespace LightBoxRectSubForm.app {
                         while (!MessageHelper.ins.modelIsEnd()) {
                             Thread.Sleep(200);
                         }
-                        
                     }
+                    Console.WriteLine("model运行结束!");
                     if (RUN_ONCE) {
                         //临时运行一次结束
                         RUN_ONCE = false;
